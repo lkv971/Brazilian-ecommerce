@@ -60,15 +60,6 @@ GROUP BY p.ProductCategory
 ;
 GO
 
-CREATE VIEW SellersCountPerState
-AS
-SELECT State,
-COUNT(SellerID) SellersCount
-FROM Sellers
-GROUP BY State
-;
-GO
-
 CREATE VIEW OrderOverviewPerState
 AS 
 SELECT s.State,
@@ -114,6 +105,15 @@ ON oi.SellerID = s.SellerID
 INNER JOIN Orders o 
 ON o.OrderID = oi.OrderID
 GROUP BY s.State
+;
+GO
+
+CREATE VIEW SellersCountPerState
+AS
+SELECT State,
+COUNT(SellerID) SellersCount
+FROM Sellers
+GROUP BY State
 ;
 GO
 
