@@ -14,6 +14,20 @@ FORMAT =  'CSV'
 ;
 GO
 
+INSERT INTO Customers (
+CustomerID,
+ZipCode,
+City,
+State
+)
+SELECT CustomerID,
+ZipCode,
+City,
+State
+FROM TempCustomers
+;
+GO
+
 BULK INSERT Geolocation
 FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\geolocation.csv"
 WITH (
@@ -37,6 +51,25 @@ FORMAT =  'CSV'
 )
 ;
 GO
+
+INSERT INTO OrderItems (
+OrderID,
+ProductID,
+SellerID,
+ShippingLimitDate,
+Price,
+FreightValue
+)
+SELECT OrderID,
+ProductID,
+SellerID,
+ShippingLimitDate,
+Price,
+FreightValue
+FROM TempOrderItems
+;
+GO
+
 
 BULK INSERT Orders
 FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\orders.csv"
@@ -86,6 +119,27 @@ FORMAT =  'CSV'
 ;
 GO
 
+INSERT INTO Products (
+ProductID,
+ProductCategory,
+PhotosQuantity,
+Weight,
+Length,
+Height,
+Width
+)
+SELECT ProductID,
+ProductCategory,
+PhotosQuantity,
+Weight,
+Length,
+Height,
+Width
+FROM TempProducts
+;
+GO
+
+
 BULK INSERT TempReviews
 FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\reviews.csv"
 WITH (
@@ -97,6 +151,23 @@ FORMAT =  'CSV'
 )
 ;
 GO
+
+INSERT INTO Reviews (
+ReviewID,
+OrderID,
+Score,
+DateTimeStamp,
+AnswerTimeStamp
+)
+SELECT ReviewID,
+OrderID,
+Score,
+DateTimeStamp,
+AnswerTimeStamp
+FROM TempReviews
+;
+GO
+
 
 BULK INSERT Sellers
 FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\sellers.csv"
