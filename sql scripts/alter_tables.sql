@@ -7,30 +7,6 @@ EXEC sp_rename 'Geolocation.Latitute',
 ;
 GO
 
-ALTER TABLE ProductCategory
-ADD ProductCategoryID INT 
-IDENTITY(1,1)
-PRIMARY KEY
-;
-GO
-
-ALTER TABLE Products
-ADD ProductCategoryID INT 
-
-UPDATE Products 
-SET ProductCategoryID = (
-SELECT ProductCategoryID
-FROM ProductCategory
-WHERE Products.ProductCategory = ProductCategory.ProductCategory
-)
-;
-GO
-
-ALTER TABLE Products
-DROP COLUMN ProductCategory
-;
-GO
-
 ALTER TABLE OrderItems
 ADD CONSTRAINT fk_OrderItems_OrderID
 FOREIGN KEY (OrderID)
