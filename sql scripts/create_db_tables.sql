@@ -17,7 +17,7 @@ State CHAR(2)
 GO
 
 CREATE TABLE Customers (
-CustomerID VARCHAR(100),
+CustomerID VARCHAR(100) PRIMARY KEY,
 ZipCode INT,
 City VARCHAR(50),
 State CHAR(2)
@@ -59,7 +59,7 @@ FreightValue DECIMAL(10,2)
 GO
 
 CREATE TABLE Orders (
-OrderID VARCHAR(100),
+OrderID VARCHAR(100) PRIMARY KEY,
 CustomerID VARCHAR(100),
 Status VARCHAR(50),
 PurchaseTimeStamp DATETIME,
@@ -103,7 +103,7 @@ Width INT
 GO
 
 CREATE TABLE Products (
-ProductID VARCHAR(100),
+ProductID VARCHAR(100) PRIMARY KEY,
 ProductCategory VARCHAR(70),
 PhotosQuantity INT,
 Weight INT,
@@ -137,13 +137,15 @@ AnswerTimeStamp DATETIME
 GO
 
 CREATE TABLE Sellers (
-SellerID VARCHAR(100),
+SellerID VARCHAR(100) PRIMARY KEY,
 ZipCode INT,
 City VARCHAR(50),
 State CHAR(2)
 )
 ;
 GO
+
+
 
 
 
