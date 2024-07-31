@@ -175,7 +175,7 @@ NewState CHAR(2)
 ;
 GO
 
-CREATE TABLE ProducAudit (
+CREATE TABLE ProductsAudit (
 ProductAuditID VARCHAR(100) PRIMARY KEY,
 ProductID VARCHAR(100),
 ChangeType VARCHAR(20),
