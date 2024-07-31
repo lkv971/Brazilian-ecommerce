@@ -145,63 +145,59 @@ State CHAR(2)
 ;
 GO
 
-CREATE TABLE OrderItemsAudit (
-OrderID VARCHAR(100),
-ProductID VARCHAR(100),
-SellerID VARCHAR(100),
-ChangeType VARCHAR(20),
-ChangeDate DATETIME,
-OldShippingLimitDate DATETIME,
-NewShippingLimitDate DATETIME,
-OldPrice DECIMAL(10,2),
-NewPrice DECIMAL(10,2),
-OldFreightValue DECIMAL(10,2),
-NewFreightValue DECIMAL(10,2)
-)
-;
-GO
-
-CREATE TABLE OrdersAudit (
-OrderAuditID INT IDENTITY (1,1) PRIMARY KEY,
-OrderID VARCHAR(100),
+CREATE TABLE CustomersAudit (
+CustomerAuditID INT IDENTITY(1,1) PRIMARY KEY,
 CustomerID VARCHAR(100),
-ChangeType VARCHAR(20),
-ChangeDate DATETIME,
-OldStatus VARCHAR(50),
-NewStatus VARCHAR(50),
-OldPurchaseTimeStamp DATETIME,
-NewPurchaseTimeStamp DATETIME,
-OldApprovalTimeStamp DATETIME,
-NewApprovalTimeStamp DATETIME,
-OldCarrierDeliveryTimeStamp DATETIME,
-NewCarrierDeliveryTimeStamp DATETIME,
-OldCustomerDeliveryTimeStamp DATETIME,
-NewCustomerDeliveryTimeStamp DATETIME,
-OldEstimatedDeliveryTimeStamp DATETIME,
-NewEstimatedDeliveryTimeStamp DATETIME
+OldZipCode INT,
+NewZipCode INT,
+OldCity VARCHAR(50),
+NewCity VARCHAR(50),
+OldState CHAR(2),
+NewState CHAR(2)
 )
 ;
 GO
 
-CREATE TABLE PaymentsAudit (
-PaymentAuditID INT IDENTITY(1,1) PRIMARY KEY,
-OrderID VARCHAR(100),
-ChangeType VARCHAR(20),
-ChangeDate DATETIME,
-OldSequential INT,
-NewSequential INT,
-OldType VARCHAR(20),
-NewType VARCHAR(20),
-OldInstallments INT,
-NewInstallments INT,
-OldValue DECIMAL(10,2),
-NewValue DECIMAL(10,2)
+CREATE TABLE SellersAudit ( 
+SellersAuditID INT IDENTITY(1,1) PRIMARY KEY,
+SellerID VARCHAR(100),
+OldZipCode INT,
+NewZipCode INT,
+OldCity VARCHAR(50),
+NewCity VARCHAR(50),
+OldState CHAR(2),
+NewState CHAR(2)
 )
 ;
 GO
 
+CREATE TABLE ProducAudit (
+ProductAuditID VARCHAR(100) PRIMARY KEY,
+ProductID VARCHAR(100),
+OldProductCategory VARCHAR(70),
+NewProductCategory VARCHAR(70),
+OldPhotosQuantity INT,
+NewPhotosQuantity INT,
+OldWeight INT,
+NewWeight INT,
+OldLength INT,
+NewLength INT,
+OldHeight INT,
+NewHeight INT,
+OldWidth INT,
+NewWidth INT
+)
+;
+GO 
 
-
+CREATE TABLE ProductCategoryAudit (
+OldProductCategory VARCHAR(70),
+NewProductCategory VARCHAR(70),
+OldProductCategoryEnglish VARCHAR(70),
+NewProductCategoryEnglish VARCHAR(70)
+)
+;
+GO
 
 
 
