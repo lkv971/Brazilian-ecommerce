@@ -125,6 +125,48 @@ END
 ;
 GO
 
+CREATE PROCEDURE InsertProductCategory
+@ProductCategory VARCHAR(70),
+@ProductCategoryEnglish VARCHAR(70)
+AS
+BEGIN
+INSERT INTO ProductCategory (
+ProductCategory,
+ProductCategoryEnglish
+)
+VALUES (
+@ProductCategory,
+@ProductCategoryEnglish
+)
+SELECT SCOPE_IDENTITY() AS NewProductCategory
+END
+;
+GO
+
+CREATE PROCEDURE RemoveProductCategory
+@ProductCategory VARCHAR(70)
+AS
+BEGIN
+DELETE FROM ProductCategory
+WHERE ProductCategory = @ProductCategory
+END
+;
+GO
+
+CREATE PROCEDURE UpdateProductEnglishTranslation
+@ProductCategory VARCHAR(70),
+@ProductCategoryEnglish VARCHAR(70)
+AS
+BEGIN
+UPDATE ProductCategory 
+SET ProductCategoryEnglish = @ProductCategoryEnglish
+WHERE ProductCategory = @ProductCategory
+END
+;
+GO
+
+
+
 
 
 
