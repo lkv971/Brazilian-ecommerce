@@ -145,6 +145,61 @@ State CHAR(2)
 ;
 GO
 
+CREATE TABLE OrderItemsAudit (
+OrderID VARCHAR(100),
+ProductID VARCHAR(100),
+SellerID VARCHAR(100),
+ChangeType VARCHAR(20),
+ChangeDate DATETIME,
+OldShippingLimitDate DATETIME,
+NewShippingLimitDate DATETIME,
+OldPrice DECIMAL(10,2),
+NewPrice DECIMAL(10,2),
+OldFreightValue DECIMAL(10,2),
+NewFreightValue DECIMAL(10,2)
+)
+;
+GO
+
+CREATE TABLE OrdersAudit (
+OrderAuditID INT IDENTITY (1,1) PRIMARY KEY,
+OrderID VARCHAR(100),
+CustomerID VARCHAR(100),
+ChangeType VARCHAR(20),
+ChangeDate DATETIME,
+OldStatus VARCHAR(50),
+NewStatus VARCHAR(50),
+OldPurchaseTimeStamp DATETIME,
+NewPurchaseTimeStamp DATETIME,
+OldApprovalTimeStamp DATETIME,
+NewApprovalTimeStamp DATETIME,
+OldCarrierDeliveryTimeStamp DATETIME,
+NewCarrierDeliveryTimeStamp DATETIME,
+OldCustomerDeliveryTimeStamp DATETIME,
+NewCustomerDeliveryTimeStamp DATETIME,
+OldEstimatedDeliveryTimeStamp DATETIME,
+NewEstimatedDeliveryTimeStamp DATETIME
+)
+;
+GO
+
+CREATE TABLE PaymentsAudit (
+PaymentAuditID INT IDENTITY(1,1) PRIMARY KEY,
+OrderID VARCHAR(100),
+ChangeType VARCHAR(20),
+ChangeDate DATETIME,
+OldSequential INT,
+NewSequential INT,
+OldType VARCHAR(20),
+NewType VARCHAR(20),
+OldInstallments INT,
+NewInstallments INT,
+OldValue DECIMAL(10,2),
+NewValue DECIMAL(10,2)
+)
+;
+GO
+
 
 
 
