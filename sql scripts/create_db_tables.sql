@@ -148,6 +148,8 @@ GO
 CREATE TABLE CustomersAudit (
 CustomerAuditID INT IDENTITY(1,1) PRIMARY KEY,
 CustomerID VARCHAR(100),
+ChangeType VARCHAR(20),
+ChangeDate DATE,
 OldZipCode INT,
 NewZipCode INT,
 OldCity VARCHAR(50),
@@ -161,6 +163,8 @@ GO
 CREATE TABLE SellersAudit ( 
 SellersAuditID INT IDENTITY(1,1) PRIMARY KEY,
 SellerID VARCHAR(100),
+ChangeType VARCHAR(20),
+ChangeDate DATE,
 OldZipCode INT,
 NewZipCode INT,
 OldCity VARCHAR(50),
@@ -174,6 +178,8 @@ GO
 CREATE TABLE ProducAudit (
 ProductAuditID VARCHAR(100) PRIMARY KEY,
 ProductID VARCHAR(100),
+ChangeType VARCHAR(20),
+ChangeDate DATE,
 OldProductCategory VARCHAR(70),
 NewProductCategory VARCHAR(70),
 OldPhotosQuantity INT,
@@ -191,6 +197,8 @@ NewWidth INT
 GO 
 
 CREATE TABLE ProductCategoryAudit (
+ChangeType VARCHAR(20),
+ChangeDate DATE,
 OldProductCategory VARCHAR(70),
 NewProductCategory VARCHAR(70),
 OldProductCategoryEnglish VARCHAR(70),
