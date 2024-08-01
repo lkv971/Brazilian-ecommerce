@@ -207,8 +207,48 @@ NewProductCategoryEnglish VARCHAR(70)
 ;
 GO
 
+DECLARE @StartDate DATE = '2016-09-01'
+;
+DECLARE @EndDate DATE = '2040-12-31'
+;
 
+CREATE TABLE Date (
+Date DATE PRIMARY KEY,
+Year INT, 
+Month INT, 
+Day INT, 
+DayName VARCHAR(20), 
+MonthName VARCHAR(20), 
+Quarter INT
+)
+;
 
+WHILE @StartDate <= @EndDate
+BEGIN
+	INSERT INTO Date (
+	Date,
+	Year, 
+	Month,
+	Day,
+	DayName,
+	MonthName,
+	Quarter
+	)
+	VALUES (
+	@StartDate,
+	YEAR(@StartDate),
+	MONTH(@StartDate),
+	DAY(@StartDate),
+	DATENAME(WEEKDAY, @StartDate),
+	DATENAME(MONTH, @StartDate),
+	DATEPART(QUARTER, @StartDate)
+	)
+	;
+	SET @StartDate = DATEADD(DAY, 1, @StartDate)
+	;
+END
+;
+GO
 
 
 
