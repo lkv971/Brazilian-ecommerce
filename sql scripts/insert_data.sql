@@ -186,3 +186,14 @@ EXEC InsertProductCategory
 @ProductCategoryEnglish = 'not categorized'
 ;
 GO
+
+EXEC RemoveProductCategory
+@ProductCategory = 'nao categorizado'
+;
+GO
+
+EXEC InsertProductCategory
+@ProductCategory = 'nao_categorizado',
+@ProductCategoryEnglish = 'not_categorized'
+;
+GO
