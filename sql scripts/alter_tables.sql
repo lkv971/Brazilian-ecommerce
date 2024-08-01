@@ -2,6 +2,17 @@ USE BrazilCommerceDB
 ;
 GO
 
+ALTER TABLE ProductCategory
+ALTER COLUMN ProductCategory VARCHAR(70) NOT NULL
+;
+GO
+
+ALTER TABLE ProductCategory
+ADD CONSTRAINT pk_ProductCategory
+PRIMARY KEY (ProductCategory)
+;
+GO
+
 EXEC sp_rename 'Geolocation.Latitute',
 'Latitude', 'COLUMN'
 ;
@@ -48,6 +59,8 @@ FOREIGN KEY (OrderID)
 REFERENCES Orders(OrderID)
 ;
 GO
+
+
 
 
 
