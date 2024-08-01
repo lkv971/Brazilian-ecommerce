@@ -13,6 +13,12 @@ PRIMARY KEY (ProductCategory)
 ;
 GO
 
+UPDATE Products
+SET ProductCategory = 'nao_categorizado'
+WHERE ProductCategory IS NULL
+;
+GO
+
 EXEC sp_rename 'Geolocation.Latitute',
 'Latitude', 'COLUMN'
 ;
