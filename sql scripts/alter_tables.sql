@@ -19,6 +19,13 @@ WHERE ProductCategory IS NULL
 ;
 GO
 
+ALTER TABLE ProductCategory
+ADD CONSTRAINT fk_Products_ProductCategoryID
+FOREIGN KEY (ProductCategory)
+REFERENCES ProductCategory(ProductCategory)
+;
+GO
+
 EXEC sp_rename 'Geolocation.Latitute',
 'Latitude', 'COLUMN'
 ;
