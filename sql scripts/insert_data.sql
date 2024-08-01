@@ -181,3 +181,8 @@ FORMAT =  'CSV'
 ;
 GO
 
+EXEC InsertProductCategory
+@ProductCategory = 'nao categorizado',
+@ProductCategoryEnglish = 'not categorized'
+;
+GO
