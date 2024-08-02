@@ -197,3 +197,17 @@ EXEC InsertProductCategory
 @ProductCategoryEnglish = 'not_categorized'
 ;
 GO
+
+EXEC InsertProductCategory
+@ProductCategory = 'pc gamer',
+@ProductCategoryEnglish = 'pc gamer'
+;
+GO
+
+EXEC InsertProductCategory
+@ProductCategory = 'portateis cozinha e preparadores de alimentos',
+@ProductCategoryEnglish = 'kitchen portables and food processors'
+;
+GO
+
+
