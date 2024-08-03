@@ -250,7 +250,9 @@ END
 ;
 GO
 
-
+DROP TABLE Date
+;
+GO
 
 
 
