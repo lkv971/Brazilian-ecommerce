@@ -87,5 +87,5 @@ The database is designed using SQL Server, with scripts provided to create and p
 
 ### SQL Server Jobs
 - Daily Differential Backup: The daily_differential_backup_brazil_commerce.sql script is used to create a differential backup of the database every day. This ensures that all changes since the last full backup are captured.
--Weekly Full Backup: The weekly_full_backup_brazil_commerce.sql script creates a full backup of the database once a week, preserving the entire state of the database.
--Daily Data Insert: The daily_insert_multiple_tables_brazil_commerce.sql script automates the insertion of data into multiple tables on a daily basis, keeping the database up-to-date for analysis.
+- Weekly Full Backup: The weekly_full_backup_brazil_commerce.sql script creates a full backup of the database once a week, preserving the entire state of the database.
+- Daily Data Insert: The daily_insert_multiple_tables_brazil_commerce.sql script automates the insertion of data into multiple tables on a daily basis, keeping the database up-to-date for analysis.
