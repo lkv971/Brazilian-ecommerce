@@ -48,6 +48,11 @@ The repository is organized into the following folders and files:
 5. **Schema**
    - `Snowflake Schema Diagram.png`: Screenshot representing the snowflake schema used for organizing the data.
 
+6. **SQL Server Jobs**
+   - `daily_differential_backup_brazil_commerce.sql`: Script for performing daily differential backups.
+   - `weekly_full_backup_brazil_commerce.sql`: Script for performing weekly full backups.
+   - `daily_insert_multiple_tables_brazil_commerce.sql`: Script for daily data inserts into multiple tables.
+
 ## Detailed Description
 This repository provides a robust framework for analyzing the performance and operations of a Brazilian e-commerce marketplace. It includes:
 
