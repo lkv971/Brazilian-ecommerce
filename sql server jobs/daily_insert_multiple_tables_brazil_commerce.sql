@@ -1,11 +1,11 @@
 USE [msdb]
 GO
 
-/****** Object:  Job [daily_insert_multiple_tables_brazil_commerce]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Job [daily_insert_multiple_tables_brazil_commerce]    Script Date: 8/8/2024 4:04:36 PM ******/
 BEGIN TRANSACTION
 DECLARE @ReturnCode INT
 SELECT @ReturnCode = 0
-/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 8/8/2024 4:04:36 PM ******/
 IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
 BEGIN
 EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
@@ -25,7 +25,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'daily_insert_multiple_tables
 		@category_name=N'[Uncategorized (Local)]', 
 		@owner_login_name=N'LAPTOP-E44HM49P\ACER', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert TempCustomers]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Bulk Insert TempCustomers]    Script Date: 8/8/2024 4:04:36 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert TempCustomers', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
@@ -46,11 +46,11 @@ TABLOCK,
 FORMAT =  ''CSV''
 )
 ;
-GO', 
+', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Insert into Customers]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Insert into Customers]    Script Date: 8/8/2024 4:04:36 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Insert into Customers', 
 		@step_id=2, 
 		@cmdexec_success_code=0, 
@@ -76,11 +76,11 @@ LEFT JOIN Customers c
 ON t.CustomerID = c.CustomerID
 WHERE c.CustomerID IS NULL
 ;
-GO', 
+', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert Sellers]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Bulk Insert Sellers]    Script Date: 8/8/2024 4:04:37 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert Sellers', 
 		@step_id=3, 
 		@cmdexec_success_code=0, 
@@ -101,11 +101,11 @@ TABLOCK,
 FORMAT =  ''CSV''
 )
 ;
-GO', 
+', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert Orders]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Bulk Insert Orders]    Script Date: 8/8/2024 4:04:37 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert Orders', 
 		@step_id=4, 
 		@cmdexec_success_code=0, 
@@ -116,10 +116,21 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Ins
 		@retry_attempts=0, 
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
-		@database_name=N'master', 
+		@command=N'BULK INSERT Orders
+FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\orders.csv"
+WITH (
+FIRSTROW = 2,
+FIELDTERMINATOR = '','',
+ROWTERMINATOR = ''0x0a'',
+TABLOCK,
+FORMAT =  ''CSV''
+)
+;
+', 
+		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert TempOrderItems]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Bulk Insert TempOrderItems]    Script Date: 8/8/2024 4:04:37 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert TempOrderItems', 
 		@step_id=5, 
 		@cmdexec_success_code=0, 
@@ -139,12 +150,11 @@ ROWTERMINATOR = ''0x0a'',
 TABLOCK,
 FORMAT =  ''CSV''
 )
-;
-GO', 
+;', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Insert Into OrderItems]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Insert Into OrderItems]    Script Date: 8/8/2024 4:04:37 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Insert Into OrderItems', 
 		@step_id=6, 
 		@cmdexec_success_code=0, 
@@ -174,11 +184,11 @@ LEFT JOIN OrderItems o
 ON t.OrderID =o.OrderID
 WHERE o.OrderID IS NULL
 ;
-GO', 
+', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert Payments]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Bulk Insert Payments]    Script Date: 8/8/2024 4:04:37 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert Payments', 
 		@step_id=7, 
 		@cmdexec_success_code=0, 
@@ -199,11 +209,11 @@ TABLOCK,
 FORMAT =  ''CSV''
 )
 ;
-GO', 
+', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert TempReviews]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Bulk Insert TempReviews]    Script Date: 8/8/2024 4:04:37 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert TempReviews', 
 		@step_id=8, 
 		@cmdexec_success_code=0, 
@@ -224,11 +234,11 @@ TABLOCK,
 FORMAT =  ''CSV''
 )
 ;
-GO', 
+', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Insert into Reviews]    Script Date: 8/8/2024 3:41:38 PM ******/
+/****** Object:  Step [Insert into Reviews]    Script Date: 8/8/2024 4:04:37 PM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Insert into Reviews', 
 		@step_id=9, 
 		@cmdexec_success_code=0, 
@@ -256,7 +266,7 @@ LEFT JOIN Reviews r
 ON t.ReviewID = r.ReviewID
 WHERE r.ReviewID IS NULL
 ;
-GO', 
+', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
