@@ -1,11 +1,11 @@
 USE [msdb]
 GO
 
-/****** Object:  Job [daily_insert_multiple_tables_brazil_commerce]    Script Date: 8/8/2024 4:04:36 PM ******/
+/****** Object:  Job [daily_insert_multiple_tables_brazil_commerce]    Script Date: 8/27/2024 6:00:36 AM ******/
 BEGIN TRANSACTION
 DECLARE @ReturnCode INT
 SELECT @ReturnCode = 0
-/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 8/8/2024 4:04:36 PM ******/
+/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 8/27/2024 6:00:36 AM ******/
 IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
 BEGIN
 EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
@@ -25,7 +25,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'daily_insert_multiple_tables
 		@category_name=N'[Uncategorized (Local)]', 
 		@owner_login_name=N'LAPTOP-E44HM49P\ACER', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert TempCustomers]    Script Date: 8/8/2024 4:04:36 PM ******/
+/****** Object:  Step [Bulk Insert TempCustomers]    Script Date: 8/27/2024 6:00:37 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert TempCustomers', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
@@ -37,20 +37,19 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Ins
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
 		@command=N'BULK INSERT TempCustomers
-FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\customers.csv"
+FROM ''C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\customers.csv''
 WITH (
 FIRSTROW = 2,
 FIELDTERMINATOR = '','',
 ROWTERMINATOR = ''\n'',
-TABLOCK,
-FORMAT =  ''CSV''
+TABLOCK
 )
 ;
 ', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Insert into Customers]    Script Date: 8/8/2024 4:04:36 PM ******/
+/****** Object:  Step [Insert into Customers]    Script Date: 8/27/2024 6:00:37 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Insert into Customers', 
 		@step_id=2, 
 		@cmdexec_success_code=0, 
@@ -80,7 +79,7 @@ WHERE c.CustomerID IS NULL
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert Sellers]    Script Date: 8/8/2024 4:04:37 PM ******/
+/****** Object:  Step [Bulk Insert Sellers]    Script Date: 8/27/2024 6:00:37 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert Sellers', 
 		@step_id=3, 
 		@cmdexec_success_code=0, 
@@ -92,20 +91,19 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Ins
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
 		@command=N'BULK INSERT Sellers
-FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\sellers.csv"
+FROM ''C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\sellers.csv''
 WITH (
 FIRSTROW = 2,
 FIELDTERMINATOR = '','',
 ROWTERMINATOR = ''\n'',
-TABLOCK,
-FORMAT =  ''CSV''
+TABLOCK
 )
 ;
 ', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert Orders]    Script Date: 8/8/2024 4:04:37 PM ******/
+/****** Object:  Step [Bulk Insert Orders]    Script Date: 8/27/2024 6:00:38 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert Orders', 
 		@step_id=4, 
 		@cmdexec_success_code=0, 
@@ -117,20 +115,19 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Ins
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
 		@command=N'BULK INSERT Orders
-FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\orders.csv"
+FROM ''C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\orders.csv''
 WITH (
 FIRSTROW = 2,
 FIELDTERMINATOR = '','',
 ROWTERMINATOR = ''0x0a'',
-TABLOCK,
-FORMAT =  ''CSV''
+TABLOCK
 )
 ;
 ', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert TempOrderItems]    Script Date: 8/8/2024 4:04:37 PM ******/
+/****** Object:  Step [Bulk Insert TempOrderItems]    Script Date: 8/27/2024 6:00:38 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert TempOrderItems', 
 		@step_id=5, 
 		@cmdexec_success_code=0, 
@@ -142,19 +139,18 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Ins
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
 		@command=N'BULK INSERT TempOrderItems
-FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\order_items.csv"
+FROM ''C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\order_items.csv''
 WITH (
 FIRSTROW = 2,
 FIELDTERMINATOR = '','',
 ROWTERMINATOR = ''0x0a'',
-TABLOCK,
-FORMAT =  ''CSV''
+TABLOCK
 )
 ;', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Insert Into OrderItems]    Script Date: 8/8/2024 4:04:37 PM ******/
+/****** Object:  Step [Insert Into OrderItems]    Script Date: 8/27/2024 6:00:38 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Insert Into OrderItems', 
 		@step_id=6, 
 		@cmdexec_success_code=0, 
@@ -188,7 +184,7 @@ WHERE o.OrderID IS NULL
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert Payments]    Script Date: 8/8/2024 4:04:37 PM ******/
+/****** Object:  Step [Bulk Insert Payments]    Script Date: 8/27/2024 6:00:38 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert Payments', 
 		@step_id=7, 
 		@cmdexec_success_code=0, 
@@ -200,20 +196,19 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Ins
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
 		@command=N'BULK INSERT Payments
-FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\payments.csv"
+FROM ''C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\payments.csv''
 WITH (
 FIRSTROW = 2,
 FIELDTERMINATOR = '','',
 ROWTERMINATOR = ''0x0a'',
-TABLOCK,
-FORMAT =  ''CSV''
+TABLOCK
 )
 ;
 ', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Bulk Insert TempReviews]    Script Date: 8/8/2024 4:04:37 PM ******/
+/****** Object:  Step [Bulk Insert TempReviews]    Script Date: 8/27/2024 6:00:39 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Insert TempReviews', 
 		@step_id=8, 
 		@cmdexec_success_code=0, 
@@ -225,20 +220,19 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Bulk Ins
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
 		@command=N'BULK INSERT TempReviews
-FROM "C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\reviews.csv"
+FROM ''C:\Users\ACER\Documents\GitHub\Brazilian-ecommerce\raw data\reviews.csv''
 WITH (
 FIRSTROW = 2,
 FIELDTERMINATOR = '','',
 ROWTERMINATOR = ''\n'',
-TABLOCK,
-FORMAT =  ''CSV''
+TABLOCK
 )
 ;
 ', 
 		@database_name=N'BrazilCommerceDB', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Insert into Reviews]    Script Date: 8/8/2024 4:04:37 PM ******/
+/****** Object:  Step [Insert into Reviews]    Script Date: 8/27/2024 6:00:39 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Insert into Reviews', 
 		@step_id=9, 
 		@cmdexec_success_code=0, 
